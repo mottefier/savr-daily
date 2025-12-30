@@ -3,32 +3,35 @@ import { useEffect} from 'react'
 import './App.css'
 
 function App() {
-  type PageState = 'home' | 'question-1' | 'question-2' | 'question-3' | 'question-4' | 'question-5';
+  const stateOrder = ['home', 'q1', 'q2', 'q3', 'q4', 'q5'];
+  type PageState = typeof stateOrder[number];
 
-  const [currentState, setCurrentState] = useState<PageState>('question-5');
+  const [currentState, setCurrentState] = useState<PageState>('q5');
   const [inputExpense, setInputExpense] = useState<number>(0);
   const [inputCategory, setInputCategory] = useState<string>("");
+  const nextButton = document.getElementById("next-button");
+  const prevButton = document.getElementById("prev-button");
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && currentState === 'question-1') {
-        setCurrentState('question-2')
+      if (event.key === 'Enter' && currentState === 'q1') {
+        setCurrentState('q2')
       }
-      else if (event.key === 'Enter' && currentState === 'question-2') {
-        setCurrentState('question-3');
+      else if (event.key === 'Enter' && currentState === 'q2') {
+        setCurrentState('q3');
       }
-      else if (event.key === 'Enter' && currentState === 'question-3') {
-        setCurrentState('question-4');
+      else if (event.key === 'Enter' && currentState === 'q3') {
+        setCurrentState('q4');
       }
-      else if (event.key === 'Enter' && currentState === 'question-4') {
-        setCurrentState('question-5');
+      else if (event.key === 'Enter' && currentState === 'q4') {
+        setCurrentState('q5');
       }
-      else if (event.key === 'Enter' && currentState === 'question-5') {
+      else if (event.key === 'Enter' && currentState === 'q5') {
         //process input before clearing
         console.log(`Submit input for ${currentState}:`, inputExpense);
         setInputExpense(0);
         setInputCategory("");
-        setCurrentState('question-5');
+        setCurrentState('q5');
       }
   };
 
@@ -41,37 +44,37 @@ function App() {
   return (
     <>
      <div>
-      {currentState === 'question-1' && (
+      {currentState === 'q1' && (
         <div className="page">
           <h2>What is your monthly income?</h2>
           <input placeholder='0'></input>
           </div>
       )}
 
-      {currentState === 'question-2' && (
+      {currentState === 'q2' && (
         <div className="page">
           <h2>What is your monthly mortgage/rent payment?</h2>
           <input placeholder='0'></input>
           </div>
       )}
 
-      {currentState === 'question-3' && (
+      {currentState === 'q3' && (
         <div className="page">
           <h2>What is your monthly entertainment bill(Netflix, Hulu, HBO, etc.)?</h2>
           <input placeholder='0'></input>
           </div>
       )}
 
-      {currentState === 'question-4' && (
+      {currentState === 'q4' && (
         <div className="page">
           <h2>What is your monthly car payment?</h2>
           <input placeholder='0'></input>
           </div>
       )}
       
-      {currentState === 'question-5' && (
+      {currentState === 'q5' && (
         <div className="page">
-          <h2>Enter any other expenses:</h2>
+          <h2>Almost done! Enter any other expenses:</h2>
           <input 
             value={inputExpense}
             onChange={(e) => {
