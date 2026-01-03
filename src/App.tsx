@@ -29,6 +29,11 @@ function App() {
       setInputCategory("");
    }
     else if(currentState === 'q5'){
+      //TODO
+      //while loop to allow multiple other expenses to be added
+      //let count = 1;
+      //store input value
+      console.log(`Submit input for ${currentState}:`, inputExpense, inputCategory);
       //pull existing count from storage
       //handleGetStoredValue(`${count}`);
       handleSetStoredValue('q5', inputExpense);
@@ -42,8 +47,6 @@ function App() {
     setInputExpense(handleGetStoredValue(stateOrder[currentIndex + 1]));
   }
   };
-
-  
 
   const handlePrev = () => {
     if(currentIndex > 0){
