@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import {handleSetStoredValue, handleGetStoredValue, handleSetStoredCategory, handleGetStoredCategory } from './storageHandles';
+import {handleSetStoredValue, handleGetStoredValue, handleSetStoredCategory, handleGetStoredCategory, handleGetAllCountValues } from './storageHandles';
 
 function App() {
   //order our questions for navigation and for managing state
@@ -48,6 +48,8 @@ function App() {
       //handleSetStoredCategory('q5', inputCategory);
       setInputCategory("");
       setCount(count => count + 1);
+      handleSetStoredValue(`expenseAmount${count}`, inputExpense);
+      console.log("Stored expenseAmount"+count+": ", handleGetStoredValue(`expenseAmount${count}`));
       //handleSetStoredValue(`${count}`, count);
       console.log("Submit count: ", count);
     }
@@ -237,6 +239,14 @@ function App() {
         <h3>Nice, your previous submission: </h3>
         <p>{handleGetStoredValue(stateOrder[currentIndex - 1])}</p>
       </div>
+      )}
+
+      {currentState === 'q5' && (
+        <div className="delete-box">
+          <h3>List of expenses:</h3>
+          <p>{handleGetAllCountValues(count)}</p>
+          </div>
+        
       )}
       </div>
       </>

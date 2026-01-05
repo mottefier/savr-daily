@@ -17,3 +17,19 @@
     //if(!storedValue) return 0;
     return storedValue ? Number(storedValue) : 0;
   }
+
+  //todo include all values AND categories
+  export const handleGetAllCountValues = (count: number): string => {
+    let valuesList = "";
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('expenseAmount')) {
+        const value = localStorage.getItem(key);
+        if (value) {
+          valuesList += `${value}, `;
+        }
+      }
+    }
+    return valuesList;
+  }
