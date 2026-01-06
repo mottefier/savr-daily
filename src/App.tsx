@@ -240,7 +240,28 @@ function App() {
           </p>
           </div>
       )}
-        <div className="nav-controls">
+    
+
+      {currentState === 'q5' && (
+      <div className="confirmation-box">
+        <button onClick={handleSubmitExpense }>
+            Add Another Expense
+        </button>
+        <p>{handleGetAllValuesCategories()}</p>
+        <button onClick={() => handleRemoveStoredValue(`expenseAmount${count}`)}>Remove Last Expense</button>
+        <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+      </div>
+      )}
+
+      {(currentState === 'q2' || currentState === 'q3' || currentState === 'q4' ) &&( 
+      <div className="confirmation-box">
+        <h3>Nice, your previous submission: </h3>
+        <p>{handleGetStoredValue(stateOrder[currentIndex - 1])}</p>
+      </div>
+      )}
+      </div>
+
+          <div className="nav-controls">
         <button 
           id='next-button'
           onClick={handleNext} 
@@ -255,26 +276,6 @@ function App() {
           hidden={currentState === 'home'}>
             Back
           </button>
-      </div>
-
-      {currentState === 'q5' && (
-      <div className="confirmation-box">
-        <button onClick={handleSubmitExpense }>
-            Add Another Expense
-        </button>
-        <h3 id='other-expenses'>Nice, your extra expenses so far: </h3>
-        <p>{handleGetAllValuesCategories()}</p>
-        <button onClick={() => handleRemoveStoredValue(`expenseAmount${count}`)}>Remove Last Expense</button>
-        <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
-      </div>
-      )}
-
-      {(currentState === 'q2' || currentState === 'q3' || currentState === 'q4' ) &&( 
-      <div className="confirmation-box">
-        <h3>Nice, your previous submission: </h3>
-        <p>{handleGetStoredValue(stateOrder[currentIndex - 1])}</p>
-      </div>
-      )}
       </div>
       </>
   );
