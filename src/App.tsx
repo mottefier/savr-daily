@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import {handleSetStoredValue, handleGetStoredValue, handleSetStoredCategory, handleGetStoredCategory, handleRemoveStoredValue } from './storageHandles';
+import {handleSetStoredValue, handleGetStoredValue, handleSetStoredCategory, handleGetStoredCategory, handleRemoveStoredValue, handleRemoveStoredCategory} from './storageHandles';
 
 function App() {
   //order our questions for navigation and for managing state
@@ -79,17 +79,26 @@ function App() {
   };
 
   const handleSubmitExpense = () => {
-    setCount(count + 1);
+    setCount(localStorage.length + 1);
     handleSetStoredCategory(`expenseCategory${count}`, inputCategory);
     setInputCategory("");
     <div><p>'testing'</p></div>
     handleSetStoredValue(`expenseAmount${count}`, inputExpense);
     setInputExpense(handleGetStoredValue(stateOrder[currentIndex]));
   }
+
+  const handleClearAllStorage = () => {
+    localStorage.clear();
+    setCount(0);
+    setInputExpense(0);
+    setInputCategory("");
+    setCurrentState(prev => prev = 'q5');
+  };
+
     //todo include all values AND categories
-  const handleGetAllCountValuesCategories = (count: number): string => {
+  const handleGetAllValuesCategories = (): string => {
     let valuesList = "";
-    for (let i = 1; i <= count; i++) {
+    for (let i = 0; i <= localStorage.length; i++) {
       const valueKey = `expenseAmount${i}`;
       const categoryKey = `expenseCategory${i}`;
       const value = localStorage.getItem(valueKey);
@@ -248,8 +257,9 @@ function App() {
             Add Another Expense
         </button>
         <h3>Nice, your extra expenses so far: </h3>
-        <p>{handleGetAllCountValuesCategories(count)}</p>
-        <button onClick={handleRemoveStoredValue(`expenseAmount${count - 1}`)}>Remove Last Expense</button>
+        <p>{handleGetAllValuesCategories()}</p>
+        <button onClick={() => handleRemoveStoredValue(`expenseAmount${count}`)}>Remove Last Expense</button>
+        <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
       </div>
       )}
 

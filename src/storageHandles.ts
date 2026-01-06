@@ -19,7 +19,7 @@
   }
 
   export const handleRemoveStoredValue = (key: string) => {
-    
+
     localStorage.removeItem(key);
   }
 
