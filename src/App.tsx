@@ -217,7 +217,7 @@ function App() {
       {currentState === 'q5' && (
         <div className="page">
           <h2>Almost done!</h2> 
-          <h3>Enter any other expenses:</h3>
+          <h3 id="other-expenses">Enter any other expenses:</h3>
           <p id='amount-title'>amount:
           <input 
             //id='expense-input'
@@ -262,7 +262,7 @@ function App() {
         <button onClick={handleSubmitExpense }>
             Add Another Expense
         </button>
-        <h3>Nice, your extra expenses so far: </h3>
+        <h3 id='other-expenses'>Nice, your extra expenses so far: </h3>
         <p>{handleGetAllValuesCategories()}</p>
         <button onClick={() => handleRemoveStoredValue(`expenseAmount${count}`)}>Remove Last Expense</button>
         <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>

@@ -5,19 +5,21 @@
   text-align: center;
 }
 
-#expense-input {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  width: 200px;
+#other-expenses{
+  margin-top: 2rem;
+  width:auto;
+  padding: .1rem;
+  border: 2px solid #093553;
+  border-radius: 8px;
+  background-color: #093553;
 }
-
 #amount-title{
   text-align:center;
   margin: 1rem 0;
   padding: 0.3rem;
   font-size: 1.0rem;
   width: 400px;
+  height: 10px;
 }
 
 .logo {
