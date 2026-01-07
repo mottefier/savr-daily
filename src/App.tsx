@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type JSX } from 'react'
 import './App.css'
 import {handleSetStoredValue, handleGetStoredValue, handleSetStoredCategory, handleGetStoredCategory, handleRemoveStoredValue, handleRemoveStoredCategory} from './storageHandles';
 
@@ -13,7 +13,7 @@ function App() {
   const [inputExpense, setInputExpense] = useState<number>(0);
   const [inputCategory, setInputCategory] = useState<string>("");
   const currentIndex = stateOrder.indexOf(currentState);
-  const [inputExpenseArray, setInputExpenseArray] = useState<{amount: number, category: string}[]>([]);
+  const [expenseList, setExpenseList] = useState<Expense[]>([]);
 
   const handleNext = () =>{
    if(currentIndex < stateOrder.length - 1) {
@@ -38,15 +38,10 @@ function App() {
       console.log("Submit count: ", count);
    }
     else if(currentState === 'q5'){
-      //store input value
-      //pull existing count from storage
-      //handleGetStoredValue(`${count}`);
-      //handleSetStoredValue('q5', inputExpense);
       setCount(count => count + 1);
       handleSetStoredCategory(`expenseCategory${count}`, inputCategory);
       setInputCategory("");
       handleSetStoredValue(`expenseAmount${count}`, inputExpense);
-      //handleSetStoredValue(`${count}`, count);
     }
     setCurrentState(stateOrder[currentIndex + 1]);
     setInputExpense(handleGetStoredValue(stateOrder[currentIndex + 1]));
@@ -79,23 +74,23 @@ function App() {
     }
   };
 
+  interface Expense {
+  id: string;
+  amount: number | "";
+  category: string;
+}
+
   const handleSubmitExpense = () => {
-    if(localStorage.getItem(`expenseAmount${count}`) === null && inputExpense === 0 && inputCategory === ""){
-      return; //do not submit empty expense
-    }
-    if(localStorage.getItem(`expenseAmount${count}`) !== null){
-      setCount((localStorage.length / 2) + 1); //each expense has a category, so divide by 2
-      console.log("Existing expense found, updating count to: ", count);
-    }
-    else{
-      setCount(count =>count + 1);
-      console.log("Updated count to: ", count);
-    }
-      handleSetStoredCategory(`expenseCategory${count}`, inputCategory);
+      const newEntry: Expense = {
+    id: crypto.randomUUID(), 
+    amount: Number(inputExpense),
+    category: inputCategory,
+  };
+
+  // Add the new object to your array
+  setExpenseList((prev) => [...prev, newEntry]);
       setInputCategory("");
-      handleSetStoredValue(`expenseAmount${count}`, inputExpense);
-      setInputExpense(handleGetStoredValue(stateOrder[currentIndex]));
-      
+      setInputExpense(0);
     }
 
   const handleClearAllStorage = () => {
@@ -103,29 +98,9 @@ function App() {
     setCount(0);
     setInputExpense(0);
     setInputCategory("");
-    setCurrentState(prev => prev = 'q5');
+    setExpenseList([]);
+  
   };
-
-  const renderExpenses = () => {
-    const expenses = [];
-    for(let i = 0; i < count; i++){
-      const amount = handleGetStoredValue(`expenseAmount${i}`);
-      const category = handleGetStoredCategory(`expenseCategory${i}`);
-      expenses.push(
-        <div key={i}>
-          <p>Expense {i + 1}: ${amount} - {category}</p>
-          <button onClick={() => editLocalStorageExpense(`expenseAmount${i}`, `expenseCategory${i}`, amount, category)}>Edit</button>
-        </div>
-      );
-    }
-    return expenses;
-  };
-
-  //todo implement edit expense function
-  const editLocalStorageExpense = (keyAmount: string, keyCategory: string, newAmount: number, newCategory: string) => {
-    handleSetStoredValue(keyAmount, newAmount);
-    handleSetStoredCategory(keyCategory, newCategory);
-  }
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -259,9 +234,17 @@ function App() {
         <button onClick={handleSubmitExpense }>
             Add Another Expense
         </button>
-        <button onClick={() => renderExpenses()}>View Expenses</button>
         <button onClick={() => handleRemoveStoredValue(`expenseAmount${count}`)}>Remove Last Expense</button>
         <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+
+        <h3>Current Expenses:</h3>
+        <div className="display-list">
+      {expenseList.map((item) => (
+        <div key={item.id} className="expense-item">
+          <strong>{item.category}:</strong> ${item.amount}
+        </div>
+      ))}
+    </div>
       </div>
       )}
 
