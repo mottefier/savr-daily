@@ -211,8 +211,8 @@ function App() {
             //id='expense-input'
             value={inputExpense}
             onChange={(e) => {
-              const val = e.target.value;
-              setInputExpense(val === "" ? 0 : Number(val));
+              const val = Number(e.target.value);
+              setInputExpense(isNaN(val) ? 0 : val);
             }}
             >
           </input>
