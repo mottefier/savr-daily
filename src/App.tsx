@@ -87,6 +87,7 @@ function App() {
     category: inputCategory,
   };
 
+
   // Add the new object to your array
   setExpenseList((prev) => [...prev, newEntry]);
       setInputCategory("");
@@ -240,6 +241,10 @@ function App() {
         {expenseList.map((item) => (
         <div key={item.id} className="expense-item">
           <strong>{item.category}:</strong> ${item.amount}
+          <button onClick={() => {
+            setExpenseList((prev) => prev.filter((i) => i.id !== item.id));
+          }}
+          >Remove</button>
         </div>
       ))}
     </div>
