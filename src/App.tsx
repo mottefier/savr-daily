@@ -46,6 +46,7 @@ function App() {
       setInputCategory("");
       handleSetStoredValue(`expenseAmount${count}`, inputExpense);
     }
+    handleSubmitExpense();
     setCurrentState(stateOrder[currentIndex + 1]);
     setInputExpense(handleGetStoredValue(stateOrder[currentIndex + 1]));
   }
@@ -219,6 +220,8 @@ const chartData = expenseList.reduce((acc, current) => {
           </div>
       )}
       
+      <div style={{display: 'flex', justifyContent: 'space-between', width:' 100%'}}>
+
       {currentState === 'q5' && (
         <div className="page">
           <h2>Almost done!</h2> 
@@ -245,10 +248,31 @@ const chartData = expenseList.reduce((acc, current) => {
           </p>
           </div>
       )}
+
+      <div className="confirmation-box">
+        <button onClick={handleSubmitExpense }>
+            Add Another Expense
+        </button>
+
+        <h3>Current Expenses:</h3>
+        <div className="display-list">
+        {expenseList.map((item) => (
+        <div key={item.id} className="expense-item">
+          <strong>{item.category}:</strong> ${item.amount}
+          <button onClick={() => {
+            setExpenseList((prev) => prev.filter((i) => i.id !== item.id));
+          }}
+          >Remove</button>
+        </div>
+      ))}
+    </div>
+      </div>
+      <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+
     
       {currentState === 'q5' && (
 
-        <div style={{ width: '100%', height: 400 }}>
+        <div style={{ width: '400px', height: '400px', justifyContent: 'flex-end' }} id="chart-container">
     <ResponsiveContainer>
       <PieChart>
         <Pie
@@ -271,26 +295,9 @@ const chartData = expenseList.reduce((acc, current) => {
     </ResponsiveContainer>
   </div>
       )}
-
-      <div className="confirmation-box">
-        <button onClick={handleSubmitExpense }>
-            Add Another Expense
-        </button>
-
-        <h3>Current Expenses:</h3>
-        <div className="display-list">
-        {expenseList.map((item) => (
-        <div key={item.id} className="expense-item">
-          <strong>{item.category}:</strong> ${item.amount}
-          <button onClick={() => {
-            setExpenseList((prev) => prev.filter((i) => i.id !== item.id));
-          }}
-          >Remove</button>
-        </div>
-      ))}
-    </div>
       </div>
-      <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+</div>
+      
 
       {(currentState === 'q2' || currentState === 'q3' || currentState === 'q4' ) &&( 
       <div className="confirmation-box">
@@ -298,8 +305,6 @@ const chartData = expenseList.reduce((acc, current) => {
         <p>{handleGetStoredValue(stateOrder[currentIndex - 1])}</p>
       </div>
       )}
-      </div>
-
           <div className="nav-controls">
         <button 
           id='next-button'

@@ -2,10 +2,7 @@
   max-width: 1280px;
   margin: 0 left;
   padding: 2rem;
-  text-align: left;
-}
-
-#chart-container{
+  text-align: center;
 }
 
 #other-expenses{
@@ -16,7 +13,6 @@
   border-radius: 8px;
   background-color: #093553;
 }
-
 
 .logo {
   height: 6em;
