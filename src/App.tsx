@@ -251,7 +251,7 @@ const chartData = expenseList.reduce((acc, current) => {
 
       <div className="confirmation-box">
         <button onClick={handleSubmitExpense }>
-            Add Another Expense
+            Add Expense
         </button>
 
         <h3>Current Expenses:</h3>
@@ -266,8 +266,8 @@ const chartData = expenseList.reduce((acc, current) => {
         </div>
       ))}
     </div>
-      </div>
       <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+      </div>
 
     
       {currentState === 'q5' && (
@@ -299,26 +299,21 @@ const chartData = expenseList.reduce((acc, current) => {
 </div>
       
 
-      {(currentState === 'q2' || currentState === 'q3' || currentState === 'q4' ) &&( 
-      <div className="confirmation-box">
-        <h3>Nice, your previous submission: </h3>
-        <p>{handleGetStoredValue(stateOrder[currentIndex - 1])}</p>
-      </div>
-      )}
           <div className="nav-controls">
-        <button 
-          id='next-button'
-          onClick={handleNext} 
-          disabled={currentState === 'summary'} 
-          hidden={currentState === 'summary'}>
-            Next
-          </button>
+        
           <button 
           id='prev-button'
           onClick={handlePrev} 
           disabled={currentState === 'home'} 
           hidden={currentState === 'home'}>
             Back
+          </button>
+          <button 
+          id='next-button'
+          onClick={handleNext} 
+          disabled={currentState === 'summary'} 
+          hidden={currentState === 'summary'}>
+            Next
           </button>
       </div>
       </>
