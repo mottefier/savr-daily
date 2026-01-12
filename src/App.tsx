@@ -219,11 +219,10 @@ const chartData = expenseList.reduce((acc, current) => {
           </div>
       )}
       
-      <div style={{display: 'flex', justifyContent: 'space-between', width:' 100%'}}>
+      <div style={{display: 'flex', gap: '20px'}}>
 
       {currentState === 'q5' && (
         <div className="page">
-          <h2>Almost done!</h2> 
           <h3 id="other-expenses">Enter any other expenses:</h3>
           <p id='amount-title'>Amount: 
           <input 
@@ -248,10 +247,13 @@ const chartData = expenseList.reduce((acc, current) => {
            <button onClick={handleSubmitExpense }>
             Add Expense
         </button>
+      </div>
+
+      )}
 
 
-
-<div style = {{width: '100%', justifyContent: 'flex-end', marginTop: '1rem'}}>
+      {currentState === 'q5' && (
+<div style = {{flex:1}}>
         <h3>Current Expenses:</h3>
         <div className="display-list">
         {expenseList.map((item) => (
@@ -266,14 +268,13 @@ const chartData = expenseList.reduce((acc, current) => {
       <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
       </div>
         </div>
-      </div>
       )}
 
        
+        <div style={{ flex: 1 , width: '300px', height: '300px' }} id="chart-container">
     
       {currentState === 'q5' && (
 
-        <div style={{ width: '400px', height: '400px', justifyContent: 'flex-end' }} id="chart-container">
     <ResponsiveContainer>
       <PieChart>
         <Pie
@@ -294,8 +295,8 @@ const chartData = expenseList.reduce((acc, current) => {
         <Legend />
       </PieChart>
     </ResponsiveContainer>
-  </div>
       )}
+  </div>
       </div>
       </div>
       
