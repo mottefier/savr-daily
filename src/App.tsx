@@ -164,6 +164,7 @@ const chartData = expenseList.reduce((acc, current) => {
   
   return (
     <>
+    <div id="header"><h1>Expense Tracker</h1></div>
      <div>
       {currentState === 'q1' && (
         <div className="page">
@@ -219,11 +220,21 @@ const chartData = expenseList.reduce((acc, current) => {
           </div>
       )}
       
-      <div style={{display: 'flex', gap: '20px'}}>
+      <div style={{display: 'flex', gap: '100px'}}>
 
       {currentState === 'q5' && (
         <div className="page">
-          <h3 id="other-expenses">Enter any other expenses:</h3>
+          <h3 >Enter any other expenses:</h3>
+          
+          <p>Category: 
+          <input 
+            id='category-input'
+            placeholder='Dining out, utilities, etc.'
+            value={inputCategory}
+            onChange={(e) => setInputCategory(e.target.value)}
+            >
+          </input>
+          </p>
           <p id='amount-title'>Amount: 
           <input 
             //id='expense-input'
@@ -235,15 +246,6 @@ const chartData = expenseList.reduce((acc, current) => {
             >
           </input>
           </p>
-          <p>Category: 
-          <input 
-            id='category-input'
-            placeholder='Dining out, utilities, etc.'
-            value={inputCategory}
-            onChange={(e) => setInputCategory(e.target.value)}
-            >
-          </input>
-          </p>
            <button onClick={handleSubmitExpense }>
             Add Expense
         </button>
@@ -251,9 +253,8 @@ const chartData = expenseList.reduce((acc, current) => {
 
       )}
 
-
       {currentState === 'q5' && (
-<div style = {{flex:1}}>
+<div style = {{flex:1, marginLeft: '50px', marginRight: '-50px'}}>
         <h3>Current Expenses:</h3>
         <div className="display-list">
         {expenseList.map((item) => (
@@ -271,7 +272,7 @@ const chartData = expenseList.reduce((acc, current) => {
       )}
 
        
-        <div style={{ flex: 1 , width: '300px', height: '300px' }} id="chart-container">
+        <div style={{ flex: 1 , width: '500px', marginLeft: '-50px' }} id="chart-container">
     
       {currentState === 'q5' && (
 
