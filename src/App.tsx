@@ -16,12 +16,21 @@ function App() {
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
+//initialize input value from storage when component mounts
+  useEffect(() => {
+    //setInputExpense(handleGetStoredValue(stateOrder[currentIndex + 1]));
+        //setInputExpense(handleGetExpenseValue('income'));
+    const storedValue = handleGetStoredValue(stateOrder[currentIndex]);
+    setInputExpense(storedValue);
+    console.log(`Initialized inputExpense with stored value: ${storedValue}`);
+  }, []);
+
   const handleNext = () =>{
    if(currentIndex < stateOrder.length - 1) {
     //store input value when moving to next question
     if(currentState === 'q1'){
       handleSetStoredValue('q1', inputExpense);
-      handleSetStoredCategory('q1', 'Income');
+      //handleSetStoredCategory('q1', 'Income');
       //prefill expenselist with income entry
       if(expenseList.length === 0){
         setExpenseList((prev) => [...prev, {id: 'income', amount: inputExpense, category: 'Income'}]);
@@ -110,12 +119,16 @@ function App() {
       }
       else if(currentState === 'q5'){
         setInputExpense(handleGetExpenseValue('car'));
+        console.log(`Prefilled inputExpense with stored value: ${handleGetExpenseValue('car')}`);
         handleRemoveExpense('car');
       }
       else if(currentState === 'summary'){
         setInputExpense(handleGetStoredValue('q5'));
         setInputCategory(handleGetStoredCategory('q5'));
       }
+      //setInputExpense(handleGetExpenseValue(stateOrder[currentIndex - 1]));
+      //console.log(`Prefilled inputExpense with stored value: ${handleGetExpenseValue(stateOrder[currentIndex - 1])}`);
+      handleRemoveExpense(stateOrder[currentIndex - 1]);
       setCurrentState(stateOrder[currentIndex - 1]);
     }
   };
