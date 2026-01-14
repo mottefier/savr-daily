@@ -159,7 +159,7 @@ const chartData = expenseList.reduce((acc, current) => {
 
   return (
     <>
-    <div id="header"><h1>Expense Tracker</h1></div>
+    
      <div>
       {currentState === 'q1' && (
         <div className="page">
@@ -215,10 +215,9 @@ const chartData = expenseList.reduce((acc, current) => {
           </div>
       )}
       
-      <div style={{display: 'flex', gap: '100px'}}>
-
+      <div style={{display: 'flex',  gap: '100px', flexDirection: 'row', minHeight: '400px'}}>
       {currentState === 'q5' && (
-        <div className="page">
+        <div style = {{flex: 1, marginLeft: '50px', marginRight: '-50px'}} className="page">
           <h3 >Enter any other expenses:</h3>
           
           <p>Category: 
@@ -243,13 +242,29 @@ const chartData = expenseList.reduce((acc, current) => {
            <button onClick={handleSubmitExpense }>
             Add Expense
         </button>
+        <button 
+          id='prev-button'
+          onClick={() => {
+            //todo remove expense associated with previous question when going back
+            console.log(`Current State: ${currentState}`);
+            handlePrev();
+          }}>
+            Back
+          </button>
+          <button style = {{marginTop: '20px', backgroundColor: 'red'}} 
+          onClick={() => handleClearAllStorage()}
+          disabled={currentState !== 'q5'}
+          hidden={currentState !== 'q5'}>
+          Start Over</button>
+        <p>Monthly Savings: ${monthlySavings}</p>
+        
       </div>
 
       )}
 
-       <div style={{ flex: 1 , width: '850px' }} id="chart-container">
     
       {currentState === 'q5' && (
+       <div style={{ flex: 1 , width: '850px' }} id="chart-container">
 
     <ResponsiveContainer>
       <PieChart>
@@ -271,11 +286,11 @@ const chartData = expenseList.reduce((acc, current) => {
         <Legend />
       </PieChart>
     </ResponsiveContainer>
-      )}
   </div>
+      )}
 
       {currentState === 'q5' && (
-<div style = {{flex:1, marginLeft: '50px', marginRight: '-50px'}}>
+<div style = {{flex:1, marginLeft: '50px', marginRight: '-50px' }}>
         <h3>Current Expenses:</h3>
         <div className="display-list">
         {expenseList.map((item) => (
@@ -290,12 +305,9 @@ const chartData = expenseList.reduce((acc, current) => {
       </div>
         </div>
       )}
-       
-       
-      </div>
-      </div>
-      
-          <div className="nav-controls">
+
+ 
+           <div className="nav-controls">
         
           <button 
           id='prev-button'
@@ -303,16 +315,11 @@ const chartData = expenseList.reduce((acc, current) => {
             //todo remove expense associated with previous question when going back
             console.log(`Current State: ${currentState}`);
             handlePrev();
-          }} 
-          disabled={currentState === 'q1'} 
-          hidden={currentState === 'q1'}>
+          }}
+          hidden={currentState === 'q1' || currentState === 'q5'}
+          disabled={currentState === 'q1' || currentState === 'q5'}>
             Back
-          </button>
-          <button style = {{marginTop: '20px', backgroundColor: 'red'}} 
-          onClick={() => handleClearAllStorage()}
-          disabled={currentState !== 'q5'}
-          hidden={currentState !== 'q5'}>
-          Start Over</button>
+          </button> 
           <button style = {{marginTop: '20px'}} 
           id='next-button'
           onClick={handleNext}
@@ -321,9 +328,11 @@ const chartData = expenseList.reduce((acc, current) => {
             Next
           </button>
       </div>
-      <div>
-        <p>Monthly Savings: ${monthlySavings}</p>
+           
       </div>
+      </div>
+      
+          
       </>
   );
 }
