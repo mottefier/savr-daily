@@ -5,7 +5,7 @@ import {handleSetStoredValue, handleGetStoredValue, handleGetStoredCategory}  fr
 
 function App() {
   //order our questions for navigation and for managing state
-  const stateOrder = ['home', 'q1', 'q2', 'q3', 'q4', 'q5', 'summary'];
+  const stateOrder = ['q1', 'q2', 'q3', 'q4', 'q5'];
   type PageState = typeof stateOrder[number];
 
   //state variables
@@ -278,13 +278,13 @@ const chartData = expenseList.reduce((acc, current) => {
         {expenseList.map((item) => (
         <div key={item.id} className="expense-item">
           <strong>{item.category}:</strong> ${item.amount}
-          <button onClick={() => {
+          <button style = {{marginTop: '10px', marginLeft: '10px'}} onClick={() => {
             handleRemoveExpense(item.id);
           }}
           >Remove</button>
         </div>
       ))}
-      <button onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
+      <button style = {{marginTop: '20px'}} onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
       </div>
         </div>
       )}
@@ -302,11 +302,11 @@ const chartData = expenseList.reduce((acc, current) => {
             console.log(`Current State: ${currentState}`);
             handlePrev();
           }} 
-          disabled={currentState === 'home'} 
-          hidden={currentState === 'home'}>
+          disabled={currentState === 'q1'} 
+          hidden={currentState === 'q1'}>
             Back
           </button>
-          <button 
+          <button style = {{marginTop: '20px'}} 
           id='next-button'
           onClick={handleNext}
           disabled={currentState === 'q5'} 
