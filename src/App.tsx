@@ -81,11 +81,14 @@ function App() {
   }
 
   const handleClearAllStorage = () => {
+    if(window.confirm("Are you sure you want to clear all expenses and start over?")){
     localStorage.clear();
     setInputExpense(0);
     setInputCategory("");
     setExpenseList([]);
-    };
+    setCurrentState('q1');
+    }
+  };
 
   const handleGetExpenseValue = (id: string): number => {
     const expense = expenseList.find(item => item.id === id);
@@ -284,7 +287,6 @@ const chartData = expenseList.reduce((acc, current) => {
           >Remove</button>
         </div>
       ))}
-      <button style = {{marginTop: '20px'}} onClick={() => handleClearAllStorage()}>Clear All Expenses</button>
       </div>
         </div>
       )}
@@ -306,6 +308,11 @@ const chartData = expenseList.reduce((acc, current) => {
           hidden={currentState === 'q1'}>
             Back
           </button>
+          <button style = {{marginTop: '20px', backgroundColor: 'red'}} 
+          onClick={() => handleClearAllStorage()}
+          disabled={currentState !== 'q5'}
+          hidden={currentState !== 'q5'}>
+          Start Over</button>
           <button style = {{marginTop: '20px'}} 
           id='next-button'
           onClick={handleNext}
