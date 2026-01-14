@@ -30,14 +30,13 @@ function App() {
     //store input value when moving to next question
     if(currentState === 'q1'){
       handleSetStoredValue('q1', inputExpense);
-      //handleSetStoredCategory('q1', 'Income');
       //prefill expenselist with income entry
-      if(expenseList.length === 0){
-        setExpenseList((prev) => [...prev, {id: 'income', amount: inputExpense, category: 'Income'}]);
-      }
-      else{
-        setExpenseList((prev) => prev.map(item => item.id === 'income' ? {...item, amount: inputExpense} : item));
-      }
+      //if(expenseList.length === 0){
+       // setExpenseList((prev) => [...prev, {id: 'income', amount: inputExpense, category: 'Income'}]);
+      //}
+      //else{
+       // setExpenseList((prev) => prev.map(item => item.id === 'income' ? {...item, amount: inputExpense} : item));
+      //}
     }
     else if(currentState === 'q2'){
       handleSetStoredValue('q2', inputExpense);
@@ -103,10 +102,8 @@ function App() {
   const handlePrev = () => {
     if(currentIndex > 0){
       //if going back to income question, prefill with stored value
-      if(currentState === 'q1'){
-      }
-      else if(currentState === 'q2'){
-        setInputExpense(handleGetExpenseValue('income'));
+      if(currentState === 'q2'){
+        handleSetStoredValue('q1', inputExpense);
         handleRemoveExpense('income');
       }
       else if(currentState === 'q3'){
@@ -144,23 +141,27 @@ const chartData = expenseList.reduce((acc, current) => {
   return acc;
 }, [] as { name: string, value: number }[]);
 
-//keyboard event listener for enter key to navigate next
+//keyboard event listener for enter key to navigate next or submit on expense page
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
+      if (event.key === 'Enter' && currentState !== 'q5') {
         handleNext();
       }
       else if (event.key === 'Enter' && currentState === 'q5') {
         handleSubmitExpense();
       }
     };
-
+    
   window.addEventListener('keydown', handleKeyDown);
 
   //cleanup to prevent multiple listeners
   return () => window.removeEventListener('keydown', handleKeyDown);
   }, [inputExpense, inputCategory, currentState]);
-  
+ 
+  const totalExpenses = chartData.reduce((sum, item) => sum + item.value, 0); 
+  const monthlySavings = handleGetStoredValue('q1') - totalExpenses;
+  console.log('testing stored value', handleGetStoredValue('q1'));
+
   return (
     <>
     <div id="header"><h1>Expense Tracker</h1></div>
@@ -268,7 +269,6 @@ const chartData = expenseList.reduce((acc, current) => {
       </div>
         </div>
       )}
-
        
         <div style={{ flex: 1 , width: '500px', marginLeft: '-50px' }} id="chart-container">
     
@@ -319,6 +319,9 @@ const chartData = expenseList.reduce((acc, current) => {
           hidden={currentState === 'q5'}>
             Next
           </button>
+      </div>
+      <div>
+        <p>Monthly Savings: ${monthlySavings}</p>
       </div>
       </>
   );
