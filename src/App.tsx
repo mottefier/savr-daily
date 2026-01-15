@@ -215,9 +215,9 @@ const chartData = expenseList.reduce((acc, current) => {
           </div>
       )}
       
-      <div style={{display: 'flex',  gap: '100px', flexDirection: 'row', minHeight: '400px'}}>
+      <div style={{display: 'flex',  flexGrow: 0, gap: '10px', flexDirection: 'row', minHeight: '400px', maxHeight: '400px', overflowY: 'auto'}}>
       {currentState === 'q5' && (
-        <div style = {{flex: 1, marginLeft: '50px', marginRight: '-50px'}} className="page">
+        <div style = {{flex: 1, marginRight: '-50px'}} className="page">
           <h3 >Enter any other expenses:</h3>
           
           <p>Category: 
@@ -264,7 +264,7 @@ const chartData = expenseList.reduce((acc, current) => {
 
     
       {currentState === 'q5' && (
-       <div style={{ flex: 1 , width: '850px' }} id="chart-container">
+       <div style={{ flex: 1,width: '500px', maxHeight: '400px', marginTop: '-40px',flexGrow: 0, flexShrink: 1, flexBasis: 'auto'}} id="chart-container">
 
     <ResponsiveContainer>
       <PieChart>
@@ -290,7 +290,7 @@ const chartData = expenseList.reduce((acc, current) => {
       )}
 
       {currentState === 'q5' && (
-<div style = {{flex:1, marginLeft: '50px', marginRight: '-50px' }}>
+<div style = {{flex:1, maxWidth: '300px', alignContent: 'right'}}>
         <h3>Current Expenses:</h3>
         <div className="display-list">
         {expenseList.map((item) => (
